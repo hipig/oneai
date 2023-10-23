@@ -1,0 +1,35 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.6",
+        "@tailwindcss/typography": "^0.5.10",
+        "@vitejs/plugin-vue": "^4.4.0",
+        "autoprefixer": "^10.4.16",
+        "axios": "^1.5.1",
+        "laravel-vite-plugin": "^0.8.0",
+        "postcss": "^8.4.31",
+        "tailwindcss": "^3.3.3",
+        "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "@headlessui/vue": "^1.7.16",
+        "@traptitech/markdown-it-katex": "^3.6.0",
+        "autosize": "^6.0.1",
+        "highlight.js": "^11.9.0",
+        "markdown-it": "^13.0.2",
+        "markdown-it-link-attributes": "^4.0.1",
+        "mitt": "^3.0.1",
+        "pinia": "^2.1.7",
+        "pinia-plugin-persistedstate": "^3.2.0",
+        "simplebar-vue": "^2.3.3",
+        "sse.js": "^1.0.0",
+        "vue": "^3.3.5",
+        "vue-router": "^4.2.5",
+        "vue3-toastify": "^0.1.14"
+    }
+}
