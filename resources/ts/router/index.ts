@@ -4,7 +4,7 @@ import appRoutes from './routes';
 import createRouteGuard from './guard';
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory('/'),
     routes: [
         {
             path: '/',
