@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -52,5 +53,17 @@ class User extends Authenticatable
         return Attribute::set(function ($value) {
            return Hash::make($value);
         });
+    }
+
+    protected function avatar(): Attribute
+    {
+        return Attribute::get(function ($value) {
+                if (Str::startsWith($value, ['http://', 'https://'])) {
+                    return $value;
+                }
+
+                return \Avatar::create($this->attributes['name'])->toBase64();
+            }
+        );
     }
 }

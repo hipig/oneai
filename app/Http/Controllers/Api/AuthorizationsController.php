@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AuthorizationRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthenticationException;
@@ -24,6 +25,11 @@ class AuthorizationsController extends Controller
         $token = $user->createToken('User Login');
 
         return $this->respondWithToken($token)->setStatusCode(201);
+    }
+
+    public function me(Request $request)
+    {
+        return UserResource::make($request->user());
     }
 
     protected function respondWithToken($token)
