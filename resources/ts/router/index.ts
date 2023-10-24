@@ -8,7 +8,7 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            redirect: 'chat',
+            redirect: '/chat',
         },
         ...appRoutes,
     ],
