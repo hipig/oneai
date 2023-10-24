@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { chats, messages, storeChats, updateChats, destroyChats, storeMessages } from '@/api/chat';
+import {createApp} from "vue";
 
 export interface ChatState {
     chatList: Array<any>;
@@ -45,6 +46,12 @@ const useChatStore = defineStore('chat', {
         },
         async getChatList() {
             this.chatList = await chats();
+
+            if (this.chatList.length === 0) {
+                await this.createChat({
+                    name: '新的会话'
+                });
+            }
         },
         async createChat(chat: any) {
             this.chatList.unshift(chat);
