@@ -46,12 +46,6 @@ const useChatStore = defineStore('chat', {
         },
         async getChatList() {
             this.chatList = await chats();
-
-            if (this.chatList.length === 0) {
-                await this.createChat({
-                    name: '新的会话'
-                });
-            }
         },
         async createChat(chat: any) {
             this.chatList.unshift(chat);
@@ -108,6 +102,10 @@ const useChatStore = defineStore('chat', {
                     list: [message]
                 })
             }
+        },
+
+        stream() {
+
         }
     },
 });

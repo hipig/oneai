@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-1">
-        <template v-if="chatList.length === 0">
+        <template v-if="!loaded">
             <div v-for="i in 4" class="animate-pulse px-3 py-2 flex items-center">
                 <div class="flex-auto flex items-center space-x-2">
                     <div class="flex-none">
@@ -12,7 +12,14 @@
                 </div>
             </div>
         </template>
-
+        <div v-if="loaded && chatList.length === 0" class="flex justify-center py-8">
+            <div class="flex flex-col items-center space-y-1 text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                </svg>
+                <div>会话列表为空</div>
+            </div>
+        </div>
         <div v-for="chat in chatList" class="px-3 py-2.5 flex items-center rounded-xl cursor-pointer" :class="[currentChatId === chat.id ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-100 hover:text-gray-900']" @click="selectChat(chat.id)">
             <div class="flex flex-auto items-center space-x-2">
                 <div class="flex-none text-gray-700">
@@ -54,19 +61,22 @@
         return chatStore.chatList;
     });
 
-    onMounted(() => {
-        getChatList();
+    const loaded = ref(false);
+
+    onMounted(async () => {
+        await getChatList();
     })
 
     const getChatList = async () => {
         await chatStore.getChatList();
+        loaded.value = true;
 
         selectChat(parseInt(route.params.chatId));
     }
 
     const selectChat = async (chatId) => {
         if (!chatId) {
-            chatId = chatList.value[0].id;
+            return false;
         }
 
         if (chatId !== currentChatId.value) {
@@ -77,6 +87,10 @@
 
     const handleDelete = async (chat) => {
         await chatStore.deleteChat(chat);
-        selectChat(chatStore.chatList[0]?.id);
+        if (chatStore.chatList[0]?.id) {
+            selectChat(chatStore.chatList[0]?.id);
+        } else {
+            await router.push({name: 'chat.new'})
+        }
     }
 </script>

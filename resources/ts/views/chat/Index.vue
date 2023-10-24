@@ -1,15 +1,10 @@
 <template>
     <main class="h-full flex flex-col">
-        <ChatHeader class="flex-none" />
+        <ChatHeader :title="title" />
         <div class="flex flex-auto flex-col overflow-hidden">
             <simplebar ref="scrollRef" class="h-full">
                 <div class="w-full max-w-screen-xl mx-auto px-4 lg:px-6">
-                    <div v-if="messageList && messageList.length === 0" class="message-list w-full flex flex-col-reverse py-6">
-                        <MessageItem type="assistant">
-                            <ChatWelcome />
-                        </MessageItem>
-                    </div>
-                    <div v-else class="message-list w-full flex flex-col-reverse py-6">
+                    <div class="message-list w-full flex flex-col-reverse py-6">
                         <MessageItem v-for="message in messageList" :type="message.type" :content="message.content" :loading="message?.loading" />
                     </div>
                 </div>
@@ -24,10 +19,9 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, nextTick, onMounted, ref, watch} from 'vue';
+    import {computed, nextTick, onMounted, ref, watch} from 'vue';
     import { useChatStore } from '@/store';
     import ChatHeader from "@/components/chat/Header.vue";
-    import ChatWelcome from "@/components/chat/Welcome.vue";
     import ChatInput from '@/components/chat/Input.vue';
     import MessageItem from '@/components/message/Item.vue';
 
@@ -36,6 +30,10 @@ import {computed, nextTick, onMounted, ref, watch} from 'vue';
     const scrollRef = ref();
 
     const loading = ref(false);
+
+    const title = computed(() => {
+        return chatStore.currentChat?.name;
+    })
 
     const messageList = computed(() => {
         return chatStore.currentMessageList;

@@ -1,9 +1,9 @@
 <template>
-    <header class="h-16 flex items-center bg-white shadow-sm">
+    <header class="h-16 flex-none flex items-center bg-white shadow-sm">
         <div class="w-full max-w-screen-xl mx-auto px-4 lg:px-6">
             <div class="flex items-center">
                 <div class="flex-auto">
-                    <h3 class="text-lg">{{ name }}</h3>
+                    <h3 class="text-lg">{{ title }}</h3>
                 </div>
                 <div class="flex-none space-x-4">
                     <button
@@ -28,12 +28,10 @@
     const appStore = useAppStore();
     const chatStore = useChatStore();
 
-    const name = computed(() => {
-        return chatStore.currentChat?.name || '新的聊天';
-    })
+    defineProps(['title']);
 
     const togglePrompt = (value) => {
         appStore.togglePrompt(value);
     }
-    
+
 </script>

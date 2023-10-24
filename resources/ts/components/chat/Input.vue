@@ -35,10 +35,13 @@
 
 <script lang="ts" setup>
     import { onMounted, ref, watch, nextTick, computed } from "vue";
+    import { useRouter } from "vue-router";
     import { useChatStore, useUserStore } from "@/store";
     import { storeMessages } from "@/api/chat";
     import  autosize from "autosize";
     import { SSE } from "sse.js";
+
+    const router = useRouter();
 
     const props = defineProps(['loading']);
     const emit = defineEmits(['update:loading']);
@@ -85,12 +88,14 @@
         textInput.value.blur();
         loading.value = true;
 
-        const chatId = chatStore.current;
-
-        const headers = {};
-        const token = userStore.token;
-        if (token) {
-            headers.Authorization = `Bearer ${token}`;
+        let chatId = chatStore.current;
+        if (!chatId) {
+            const chat = await chatStore.createChat({
+                name: '新的会话'
+            });
+            chatId = chat.id;
+            chatStore.setCurrent(chatId);
+            await router.push({name: 'chat.index', params: { chatId }});
         }
 
         await chatStore.createMessage({
@@ -106,6 +111,12 @@
             content: '',
             loading: true
         });
+
+        const headers = {};
+        const token = userStore.token;
+        if (token) {
+            headers.Authorization = `Bearer ${token}`;
+        }
 
         eventSource.value = new SSE(`/api/chats/${chatId}/stream`, {
             headers,
@@ -124,7 +135,6 @@
         };
         eventSource.value.onerror = function (e) {
             eventSource.value.close();
-            console.log(e.data);
             loading.value = false;
             chatStore.messageList[index].list[0].loading = false;
         };
