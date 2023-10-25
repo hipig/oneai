@@ -39,7 +39,9 @@ const useChatStore = defineStore('chat', {
     actions: {
         setCurrent(current) {
             this.current = current;
-            this.getMessageList();
+            if (current) {
+                this.getMessageList();
+            }
         },
         setContent(content) {
             this.content = content;
