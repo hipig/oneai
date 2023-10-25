@@ -1,31 +1,53 @@
 <template>
     <div class="h-screen flex">
         <div class="grow h-full overflow-hidden">
-            <div class="h-full relative lg:pl-72">
-                <aside class="absolute inset-y-0 left-0 bg-white transition-transform duration-500 ease-out">
-                    <div class="h-full flex flex-col w-72 border-r border-gray-200 relative">
-                        <div class="h-16 shadow-sm flex-none flex items-center justify-between lg:justify-center px-6 w-full dark:bg-gray-600 dark:bg-opacity-25">
-                            <button type="button" class="w-full inline-flex justify-center items-center space-x-2 border font-semibold rounded-xl px-3 py-2 text-sm bg-gray-900 text-white" @click="handleNew">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
-                                </svg>
-                                <span>新的会话</span>
-                            </button>
+            <div class="h-full relative" :class="{'md:pl-64': desktopMenuOpen}">
+                <aside
+                    :class="{
+                        '-translate-x-full': !mobileMenuOpen,
+                        'translate-x-0': mobileMenuOpen,
+                        'md:-translate-x-full': !desktopMenuOpen,
+                        'md:translate-x-0': desktopMenuOpen,
+                    }"
+                    class="absolute inset-y-0 left-0 w-full md:w-64 bg-white transition-transform duration-500 ease-out z-50">
+                    <div class="h-full flex flex-col w-full border-r border-gray-200 relative">
+                        <div class="h-14 shadow-sm flex-none flex items-center justify-between lg:justify-center px-2 w-full dark:bg-gray-600 dark:bg-opacity-25">
+                            <div class="flex-auto">
+                                <button type="button" class="w-full inline-flex justify-center items-center space-x-2 border font-semibold rounded-xl px-3 py-2 text-sm bg-gray-900 text-white" @click="handleNew">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                        <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span>新的会话</span>
+                                </button>
+                            </div>
+                            <div class="flex-none">
+                                <div class="block md:hidden">
+                                    <button
+                                        @click="mobileMenuOpen = !mobileMenuOpen"
+                                        type="button"
+                                        class="px-3 py-1 text-gray-700 hover:text-gray-800 focus:text-gray-900"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="flex flex-auto flex-col overflow-hidden">
                             <simplebar class="h-full">
-                                <div class="px-4 py-4 w-full">
+                                <div class="px-2 py-4 w-full">
                                     <div v-if="currentView === 'list'">
                                         <ChatList />
                                     </div>
-                                    <div v-if="currentView === 'chat'">
+                                    <div v-if="currentView === 'setting'">
                                         <ChatSetting />
                                     </div>
                                 </div>
                             </simplebar>
                         </div>
                         <div class="flex flex-none">
-                            <div class="w-full flex justify-center py-3 px-6">
+                            <div class="w-full flex justify-center py-3 px-2">
                                 <div class="w-full flex items-center p-px border border-gray-200 rounded-xl overflow-hidden">
                                     <button
                                         @click="handleToggle('list')"
@@ -62,7 +84,7 @@
 <script lang="ts" setup>
     import {computed, ref} from 'vue';
     import { useRouter } from 'vue-router';
-    import { useChatStore } from '@/store';
+    import { useChatStore, useAppStore } from '@/store';
     import ChatList from '@/components/chat/List.vue';
     import ChatSetting from '@/components/chat/Setting.vue';
     import ChatPrompt from '@/components/chat/Prompt.vue';
@@ -71,8 +93,27 @@
     const router = useRouter();
 
     const chatStore = useChatStore();
+    const appStore = useAppStore();
 
     const currentView = ref('list');
+
+    const desktopMenuOpen = computed({
+        get() {
+            return appStore.desktopMenuOpen;
+        },
+        set(n) {
+            appStore.toggleMenu(n);
+        }
+    })
+
+    const mobileMenuOpen = computed({
+        get() {
+            return appStore.mobileMenuOpen;
+        },
+        set(n) {
+            appStore.toggleMenu(n, 'mobile');
+        }
+    })
 
     const current = computed(() => {
         return chatStore.current;

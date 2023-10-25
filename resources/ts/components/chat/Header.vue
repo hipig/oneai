@@ -1,9 +1,9 @@
 <template>
-    <header class="h-16 flex-none flex items-center bg-white shadow-sm">
-        <div class="w-full max-w-screen-xl mx-auto px-4 lg:px-6">
+    <header class="h-14 flex-none flex items-center bg-white shadow-sm relative">
+        <div class="w-full max-w-screen-lg mx-auto px-4 lg:px-6">
             <div class="flex items-center">
                 <div class="flex-auto">
-                    <h3 class="text-lg">{{ title }}</h3>
+                    <h3 class="text-lg pl-10 md:pl-0">{{ title }}</h3>
                 </div>
                 <div class="flex-none space-x-4">
                     <button
@@ -18,6 +18,30 @@
                 </div>
             </div>
         </div>
+        <div class="absolute inset-y-0 left-0 flex items-center">
+            <div class="hidden md:block">
+                <button
+                    @click="desktopMenuOpen = !desktopMenuOpen"
+                    type="button"
+                    class="px-3 py-1 text-gray-700 hover:text-gray-800 focus:text-gray-900"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+            <div class="block md:hidden">
+                <button
+                    @click="mobileMenuOpen = !mobileMenuOpen"
+                    type="button"
+                    class="px-3 py-1 text-gray-700 hover:text-gray-800 focus:text-gray-900"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
     </header>
 </template>
 
@@ -26,9 +50,26 @@
     import { useAppStore, useChatStore } from "@/store";
 
     const appStore = useAppStore();
-    const chatStore = useChatStore();
 
     defineProps(['title']);
+
+    const desktopMenuOpen = computed({
+        get() {
+            return appStore.desktopMenuOpen;
+        },
+        set(n) {
+            appStore.toggleMenu(n);
+        }
+    })
+
+    const mobileMenuOpen = computed({
+        get() {
+            return appStore.mobileMenuOpen;
+        },
+        set(n) {
+            appStore.toggleMenu(n, 'mobile');
+        }
+    })
 
     const togglePrompt = (value) => {
         appStore.togglePrompt(value);

@@ -2,7 +2,7 @@
     <main class="h-full flex flex-col">
         <ChatHeader title="新的会话" />
         <div class="flex flex-auto">
-            <div class="w-full max-w-screen-xl mx-auto px-4 lg:px-6">
+            <div class="w-full max-w-screen-lg mx-auto px-4 lg:px-6">
                 <div class="message-list w-full flex flex-col-reverse py-6">
                     <MessageItem type="assistant">
                         <ChatWelcome />
@@ -11,7 +11,7 @@
             </div>
         </div>
         <footer class="flex flex-none py-6">
-            <div class="w-full max-w-screen-xl mx-auto px-4 lg:px-6">
+            <div class="w-full max-w-screen-lg mx-auto px-4 lg:px-6">
                 <ChatInput />
             </div>
         </footer>

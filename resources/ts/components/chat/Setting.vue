@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-6">
+    <div class="px-2 space-y-6">
         <div class="space-y-2">
             <div>
                 <label class="block font-medium">模型</label>

@@ -1,5 +1,5 @@
 <template>
-    <div class="pb-8 relative">
+    <div class=" md:pb-8 relative">
         <div class="relative rounded-xl leading-none">
             <textarea ref="textInput" placeholder="你可以问我任何问题" v-model="content" @keyup.ctrl.enter="handleSubmit" @keyup.esc="handleCancel" rows="1" class="w-full py-2.5 px-4 pr-14 border-gray-200 bg-white focus:border-gray-900 focus:ring-gray-900 rounded-xl shadow-sm"></textarea>
             <div class="absolute bottom-0 right-0 flex items-center px-2 py-1.5">
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="absolute right-0 h-8 flex items-center px-px">
+        <div class="absolute right-0 h-8 items-center px-px hidden md:flex">
             <span class="text-sm text-gray-500">{{ loading ? 'ESC 或点击取消': 'Ctrl + Enter 或点击发送' }}</span>
         </div>
     </div>
@@ -134,6 +134,7 @@
             }
         };
         eventSource.value.onerror = function (e) {
+            console.log(e);
             eventSource.value.close();
             loading.value = false;
             chatStore.messageList[index].list[0].loading = false;

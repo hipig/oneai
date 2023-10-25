@@ -20,7 +20,7 @@
                 <div>会话列表为空</div>
             </div>
         </div>
-        <div v-for="chat in chatList" class="px-3 py-2.5 flex items-center rounded-xl cursor-pointer" :class="[currentChatId === chat.id ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-100 hover:text-gray-900']" @click="selectChat(chat.id)">
+        <div v-if="loaded" v-for="chat in chatList" class="px-3 py-2.5 flex items-center rounded-xl cursor-pointer" :class="[currentChatId === chat.id ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-100 hover:text-gray-900']" @click="selectChat(chat.id)">
             <div class="flex flex-auto items-center space-x-2">
                 <div class="flex-none text-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
