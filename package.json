@@ -28,6 +28,7 @@
         "pinia-plugin-persistedstate": "^3.2.0",
         "simplebar-vue": "^2.3.3",
         "sse.js": "^1.0.0",
+        "vite-plugin-compression": "^0.5.1",
         "vue": "^3.3.5",
         "vue-router": "^4.2.5",
         "vue3-toastify": "^0.1.14"
