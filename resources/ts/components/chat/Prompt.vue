@@ -7,7 +7,7 @@
             <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                    <DialogPanel class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-screen-xl">
+                    <DialogPanel class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-screen-lg">
                         <div class=" absolute top-0 right-0 p-4">
                             <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100" @click="togglePrompt(false)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="flex-none py-1">
                                     <div class="relative">
-                                        <input type="text" class="w-96 py-2.5 px-4 text-lg bg-gray-100 border-gray-100 focus:bg-white focus:border-gray-900 focus:ring-gray-900 rounded-2xl" placeholder="输入指令关键词">
+                                        <input type="text" class="w-80 py-2 px-4 text-lg bg-gray-100 border-gray-100 focus:bg-white focus:border-gray-900 focus:ring-gray-900 rounded-2xl" placeholder="输入指令关键词">
                                     </div>
                                 </div>
                             </div>

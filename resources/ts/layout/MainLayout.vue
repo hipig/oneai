@@ -9,7 +9,7 @@
                         'md:-translate-x-full': !desktopMenuOpen,
                         'md:translate-x-0': desktopMenuOpen,
                     }"
-                    class="absolute inset-y-0 left-0 w-full md:w-64 bg-white transition-transform duration-500 ease-out z-50">
+                    class="absolute inset-y-0 left-0 w-full md:w-64 bg-white transition-transform duration-500 ease-out z-10">
                     <div class="h-full flex flex-col w-full border-r border-gray-200 relative">
                         <div class="h-14 shadow-sm flex-none flex items-center justify-between lg:justify-center px-2 w-full dark:bg-gray-600 dark:bg-opacity-25">
                             <div class="flex-auto">

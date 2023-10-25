@@ -1,6 +1,6 @@
 <template>
-    <div class="group relative px-5 py-5 bg-white rounded-2xl shadow-sm hover:shadow cursor-pointer">
-        <div class="absolute right-0 top-0 py-4 px-5">
+    <div class="group relative px-4 py-3 bg-white rounded-2xl shadow-sm hover:shadow cursor-pointer">
+        <div class="absolute right-0 top-0 py-3 px-4">
             <button
                 class="hidden group-hover:flex w-8 h-8 items-center justify-center bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900 rounded-md">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -10,7 +10,7 @@
                 </svg>
             </button>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-2">
             <div class="space-y-1">
                 <div class="flex items-center space-x-1">
                     <h3 class="text-lg truncate">{{ name }}</h3>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="flex justify-end">
-                <button class="px-3 py-1 border border-gray-900 bg-gray-900 text-white rounded-xl" @click="handleUse">
+                <button class="px-3 py-0.5 border border-gray-900 bg-gray-900 text-white rounded-xl" @click="handleUse">
                     使用
                 </button>
             </div>
