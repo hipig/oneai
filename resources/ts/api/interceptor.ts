@@ -42,7 +42,7 @@ axios.interceptors.response.use(
                 await userStore.clearToken();
                 break;
             case 403:
-                toast(error.response.data.message || '此操作权限不足');
+                toast('此操作权限不足 ' + error.response.data?.message);
                 break;
             default:
                 toast(error.response.data.message || '服务器内部错误');

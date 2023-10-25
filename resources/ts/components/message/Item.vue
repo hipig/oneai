@@ -1,6 +1,6 @@
 <template>
-    <div class="message-item py-3 flex items-start space-x-2" v-if="$slots.default || content">
-        <div class="flex flex-none text-gray-700 py-1">
+    <div class="w-full message-item py-3 flex flex-col sm:flex-row items-start sm:space-x-2 space-y-1 sm:space-y-0" v-if="$slots.default || content">
+        <div class="flex md:flex-none text-gray-700 py-1">
             <div class="w-8 h-8 bg-white p-px border border-gray-200 rounded-full overflow-hidden">
                 <img v-if="type === 'user'" class="w-full h-full rounded-full" :src="userInfo.avatar" :alt="userInfo.name">
                 <svg v-if="type === 'assistant'" viewBox="140 140 520 520" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
@@ -8,7 +8,7 @@
                 </svg>
             </div>
         </div>
-        <div class="min-w-[20rem] py-2 px-4 rounded-xl" :class="[type === 'assistant' ? 'bg-white' : 'bg-gray-100']">
+        <div class="min-w-[20rem] rounded-xl" :class="[type === 'assistant' ? 'bg-white py-2 px-4' : 'bg-gray-100 sm:py-2 sm:px-4']">
             <slot>
                 <div class="prose max-w-none" :class="{'content-loading':  type === 'assistant' && loading, 'whitespace-pre-wrap': type === 'user'}" v-html="content"></div>
             </slot>

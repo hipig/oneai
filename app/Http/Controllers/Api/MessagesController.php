@@ -14,7 +14,9 @@ class MessagesController extends Controller
 {
     public function index(Request $request)
     {
-        $messages = Message::query()->where('chat_id', $request->chat_id)->latest()->get();
+        $chat = Chat::query()->where('id', $request->chat_id)->firstOrFail();
+        $this->authorize('own', $chat);
+        $messages = Message::query()->where('chat_id', $chat->id)->latest()->get();
 
         return MessageResource::collection($messages);
     }
@@ -22,6 +24,7 @@ class MessagesController extends Controller
     public function store(Request $request)
     {
         $chat = Chat::query()->where('id', $request->chat_id)->firstOrFail();
+        $this->authorize('own', $chat);
 
         $message = new Message(
             $request->only([

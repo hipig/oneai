@@ -9,9 +9,9 @@
                         'md:-translate-x-full': !desktopMenuOpen,
                         'md:translate-x-0': desktopMenuOpen,
                     }"
-                    class="absolute inset-y-0 left-0 w-full md:w-64 bg-white transition-transform duration-500 ease-out z-10">
+                    class="absolute inset-y-0 left-0 w-4/5 md:w-64 bg-white transition-transform duration-500 ease-out z-10">
                     <div class="h-full flex flex-col w-full border-r border-gray-200 relative">
-                        <div class="h-14 shadow-sm flex-none flex items-center justify-between lg:justify-center px-2 w-full dark:bg-gray-600 dark:bg-opacity-25">
+                        <div class="h-14 shadow-sm flex-none flex items-center justify-between lg:justify-center px-2 space-x-2 w-full dark:bg-gray-600 dark:bg-opacity-25">
                             <div class="flex-auto">
                                 <button type="button" class="w-full inline-flex justify-center items-center space-x-2 border font-semibold rounded-xl px-3 py-2 text-sm bg-gray-900 text-white" @click="handleNew">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
@@ -20,18 +20,16 @@
                                     <span>新的会话</span>
                                 </button>
                             </div>
-                            <div class="flex-none">
-                                <div class="block md:hidden">
-                                    <button
-                                        @click="mobileMenuOpen = !mobileMenuOpen"
-                                        type="button"
-                                        class="px-3 py-1 text-gray-700 hover:text-gray-800 focus:text-gray-900"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
+                            <div class="flex-none block md:hidden">
+                                <button
+                                    @click="mobileMenuOpen = !mobileMenuOpen"
+                                    type="button"
+                                    class="px-3 py-1 text-gray-700 hover:text-gray-800 focus:text-gray-900"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                         <div class="flex flex-auto flex-col overflow-hidden">
@@ -128,18 +126,10 @@
     }
 
     const handleNew = async () => {
-        // const chat = await chatStore.createChat({
-        //     name: '新的会话',
-        //     model: "gpt-4",
-        //     temperature: 0.8,
-        //     top_p: 1,
-        //     max_tokens: 2000,
-        //     presence_penalty: 0,
-        //     frequency_penalty: 0,
-        // });
         chatStore.setCurrent(undefined);
         await router.push({
             name: 'chat.new'
         });
+        mobileMenuOpen.value = false;
     }
 </script>

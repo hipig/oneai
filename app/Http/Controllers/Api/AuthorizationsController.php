@@ -18,7 +18,7 @@ class AuthorizationsController extends Controller
     {
         $user = User::query()->where('username', $request->username)->firstOrFail();
 
-        if (!Hash::check($request->password, $user->getAuthPassword())) {
+        if (!Hash::check($request->password, $user->password)) {
             throw new AuthenticationException('用户名或密码错误');
         }
 

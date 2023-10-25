@@ -3,7 +3,7 @@
         <div class="w-full max-w-screen-lg mx-auto px-4 lg:px-6">
             <div class="flex items-center">
                 <div class="flex-auto">
-                    <h3 class="text-lg pl-10 md:pl-0">{{ title }}</h3>
+                    <h3 class="text-lg pl-10 xl:pl-0">{{ title }}</h3>
                 </div>
                 <div class="flex-none space-x-4">
                     <button

@@ -45,13 +45,13 @@
 <script lang="ts" setup>
     import { ref, computed, onMounted } from 'vue';
     import {useRoute, useRouter} from 'vue-router';
-    import { useChatStore } from '@/store';
-    import { detoryChats } from '@/api/chat';
+    import { useChatStore, useAppStore } from '@/store';
 
     const route = useRoute();
     const router = useRouter();
 
     const chatStore = useChatStore();
+    const appStore = useAppStore();
 
     const currentChatId = computed(() => {
         return chatStore.current;
@@ -83,6 +83,7 @@
             chatStore.setCurrent(chatId);
             await router.push({name: 'chat.index', params: {chatId}});
         }
+        appStore.toggleMenu(false, 'mobile');
     }
 
     const handleDelete = async (chat) => {

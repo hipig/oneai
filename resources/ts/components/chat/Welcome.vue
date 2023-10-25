@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="bg-gray-50 p-6 rounded-xl">
-                <div class="grid grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                     <template v-if="promptList.length === 0">
                         <div v-for="i in 6" class="animate-pulse relative px-5 py-5 bg-white rounded-2xl shadow-sm hover:shadow cursor-pointer">
                             <div class="space-y-4">

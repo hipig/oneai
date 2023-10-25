@@ -21,7 +21,7 @@ class ChatsController extends Controller
     public function store(Request $request)
     {
         $chat = new Chat([
-            'name' => '新的会话',
+            'name' => $request->name ?? '新的会话',
             'config' => [
                 'model' => 'gpt-4',
                 'temperature' => 0.8,
@@ -39,6 +39,8 @@ class ChatsController extends Controller
 
     public function update(Request $request, Chat $chat)
     {
+        $this->authorize('own', $chat);
+
         $chat->fill(
             $request->only([
                 'name', 'config'
@@ -51,13 +53,16 @@ class ChatsController extends Controller
 
     public function destroy(Chat $chat)
     {
-        $chat->delete();
+        $this->authorize('own', $chat);
 
+        $chat->delete();
         return response()->noContent();
     }
 
     public function stream(Chat $chat)
     {
+        $this->authorize('own', $chat);
+
         $firstMessage = Message::query()->where('chat_id', $chat->id)->where('type', Message::TYPE_NEW_CONTEXT)->latest()->first();
         if (!$firstMessage) {
             $firstMessage = Message::query()->where('chat_id', $chat->id)->latest()->first();

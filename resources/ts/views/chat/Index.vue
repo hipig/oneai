@@ -4,7 +4,7 @@
         <div class="flex flex-auto flex-col overflow-hidden">
             <simplebar ref="scrollRef" class="h-full">
                 <div class="w-full max-w-screen-lg mx-auto px-4 lg:px-6">
-                    <div class="message-list w-full flex flex-col-reverse py-6">
+                    <div class="message-list w-full flex flex-col-reverse py-2 sm:py-6">
                         <MessageItem v-for="message in messageList" :type="message.type" :content="message.content" :loading="message?.loading" />
                     </div>
                 </div>
