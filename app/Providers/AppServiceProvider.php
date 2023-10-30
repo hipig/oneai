@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 
@@ -15,15 +16,19 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton('openai', function () {
-            $clientConfig = [];
+            $client = \OpenAI::factory()
+                ->withApiKey(config('services.openai.api_key'));
+
+            if (config('services.openai.base_uri')) {
+                $client->withBaseUri(config('services.openai.base_uri'));
+            }
             if (config('services.openai.http_proxy')) {
-                $clientConfig['proxy'] = config('services.openai.http_proxy');
+                $client->withHttpClient(new Client([
+                    'proxy' => config('services.openai.http_proxy')
+                ]));
             }
 
-            return \OpenAI::factory()
-                ->withApiKey(config('services.openai.api_key'))
-                ->withHttpClient(new Client($clientConfig))
-                ->make();
+            return $client->make();
         });
 
     }
