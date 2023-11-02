@@ -63,10 +63,14 @@ const useChatStore = defineStore('chat', {
             }
         },
         async deleteChat(chat: any) {
-            const index = this.chatList.findIndex(item => item.id === chat.id)
+            const index = this.chatList.findIndex(item => item.id === chat.id);
+            const messageIndex = this.messageList.findIndex(item => item.chat_id === chat.id);
             if (index > -1) {
                 this.chatList.splice(index, 1);
                 await destroyChats(chat.id);
+            }
+            if (messageIndex > -1) {
+                this.messageList.splice(messageIndex, 1);
             }
         },
         async getMessageList() {
@@ -105,10 +109,6 @@ const useChatStore = defineStore('chat', {
                 })
             }
         },
-
-        stream() {
-
-        }
     },
 });
 

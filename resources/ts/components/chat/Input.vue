@@ -1,7 +1,7 @@
 <template>
     <div class=" md:pb-8 relative">
         <div class="relative rounded-xl leading-none">
-            <textarea ref="textInput" placeholder="你可以问我任何问题" v-model="content" @keyup.ctrl.enter="handleSubmit" @keyup.esc="handleCancel" rows="1" class="w-full py-2.5 px-4 pr-14 border-gray-200 bg-white focus:border-gray-900 focus:ring-gray-900 rounded-xl shadow-sm"></textarea>
+            <textarea ref="textInput" placeholder="你可以问我任何问题" v-model="content" @keyup.ctrl.enter="handleSubmit" rows="1" class="w-full py-2.5 px-4 pr-14 border-gray-200 bg-white focus:border-gray-900 focus:ring-gray-900 rounded-xl shadow-sm"></textarea>
             <div class="absolute bottom-0 right-0 flex items-center px-2 py-1.5">
                 <button title="发送" type="button" @click="handleSubmit" class="p-1.5 flex items-center justify-center leading-none hover:bg-gray-100 rounded-xl">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="absolute right-0 h-8 items-center px-px hidden md:flex">
-            <span class="text-sm text-gray-500">{{ loading ? 'ESC 或点击取消': 'Ctrl + Enter 或点击发送' }}</span>
+            <span class="text-sm text-gray-500">{{ loading ? '点击取消': 'Ctrl + Enter 或点击发送' }}</span>
         </div>
     </div>
 
@@ -81,6 +81,18 @@
         }
     )
 
+    onMounted(() => {
+        window.addEventListener('keydown', async (e) => {
+            switch (e.key) {
+                case 'Escape':
+                    if (loading.value) {
+                        await handleCancel();
+                    }
+                    break;
+            }
+        })
+    })
+
     const handleSubmit = async () => {
         if (!content.value) {
             return false;
@@ -91,7 +103,7 @@
         let chatId = chatStore.current;
         if (!chatId) {
             const chat = await chatStore.createChat({
-                name: '新的会话'
+                name: content.value
             });
             chatId = chat.id;
             chatStore.setCurrent(chatId);

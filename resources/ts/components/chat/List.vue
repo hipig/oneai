@@ -91,6 +91,7 @@
         if (chatStore.chatList[0]?.id) {
             selectChat(chatStore.chatList[0]?.id);
         } else {
+            chatStore.setCurrent(undefined);
             await router.push({name: 'chat.new'})
         }
     }

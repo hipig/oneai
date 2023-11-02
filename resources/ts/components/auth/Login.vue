@@ -20,7 +20,7 @@
                                 <div class="space-y-1">
                                     <label class="" for="">密码</label>
                                     <div>
-                                        <input type="password" v-model="loginForm.password" class="w-full px-4 py-2.5 bg-gray-100 border-gray-100 focus:border-gray-900 focus:ring-gray-900 rounded-xl"  placeholder="请输入密码">
+                                        <input type="password" v-model="loginForm.password" @keyup.enter="handleSubmit" class="w-full px-4 py-2.5 bg-gray-100 border-gray-100 focus:border-gray-900 focus:ring-gray-900 rounded-xl"  placeholder="请输入密码">
                                     </div>
                                 </div>
                                 <button type="button" class="w-full px-4 py-2.5 bg-gray-900 text-white rounded-xl" @click="handleSubmit">立即登录</button>

@@ -8,6 +8,7 @@ use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ChatsController extends Controller
 {
@@ -20,8 +21,9 @@ class ChatsController extends Controller
 
     public function store(Request $request)
     {
+        $name = Str::substr($request->name, 0, 15) ?? '新的会话';
         $chat = new Chat([
-            'name' => $request->name ?? '新的会话',
+            'name' => $name,
             'config' => [
                 'model' => 'gpt-4',
                 'temperature' => 0.8,
@@ -56,6 +58,8 @@ class ChatsController extends Controller
         $this->authorize('own', $chat);
 
         $chat->delete();
+        $chat->messages()->delete();
+
         return response()->noContent();
     }
 
