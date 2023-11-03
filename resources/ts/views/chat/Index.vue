@@ -23,7 +23,7 @@
         </div>
         <footer class="flex flex-none py-6">
             <div class="w-full max-w-screen-lg mx-auto px-4 lg:px-6">
-                <ChatInput v-model:loading="loading" />
+                <ChatInput />
             </div>
         </footer>
     </main>
@@ -39,8 +39,6 @@
     const chatStore = useChatStore();
 
     const scrollRef = ref();
-
-    const loading = ref(false);
 
     const title = computed(() => {
         return chatStore.currentChat?.name;

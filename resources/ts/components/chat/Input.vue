@@ -43,9 +43,6 @@
 
     const router = useRouter();
 
-    const props = defineProps(['loading']);
-    const emit = defineEmits(['update:loading']);
-
     const chatStore = useChatStore();
     const userStore = useUserStore();
 
@@ -58,14 +55,7 @@
         }
     });
 
-    const loading = computed({
-        get() {
-            return props.loading;
-        },
-        set(n) {
-            emit('update:loading', n);
-        }
-    });
+    const loading = ref(false);
 
     const eventSource = ref();
 
