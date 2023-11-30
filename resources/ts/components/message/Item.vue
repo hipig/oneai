@@ -1,5 +1,5 @@
 <template>
-    <div class="group message-item py-3 flex flex-col sm:flex-row items-start sm:space-x-2 space-y-1 sm:space-y-0" v-if="$slots.default || content">
+    <div class="message-item py-3 flex flex-col sm:flex-row items-start sm:space-x-2 space-y-1 sm:space-y-0" v-if="$slots.default || content">
         <div class="flex md:flex-none text-gray-700 py-1">
             <div class="w-8 h-8 bg-white p-px border border-gray-200 rounded-full overflow-hidden">
                 <img v-if="type === 'user'" class="w-full h-full rounded-full" :src="userInfo.avatar" :alt="userInfo.name">
@@ -10,7 +10,7 @@
         </div>
         <div class="md:flex-auto">
             <slot>
-                <div class="space-y-1.5">
+                <div class="group space-y-1.5">
                     <div class="flex">
                         <div class="rounded-xl" :class="[type === 'assistant' ? 'bg-white py-2 px-4' : 'bg-gray-100 sm:px-4']">
                             <div ref="textRef" class="prose max-w-none" :class="{'content-loading':  type === 'assistant' && loading, 'whitespace-pre-wrap': type === 'user'}" v-html="content"></div>
