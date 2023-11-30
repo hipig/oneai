@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('models', function (Blueprint $table) {
+            $table->comment('聊天模型');
             $table->id();
+            $table->string('group', 64)->comment('分组');
+            $table->string('name')->comment('模型名称');
+            $table->unsignedInteger('rank')->default(0)->comment('顺序');
+            $table->unsignedTinyInteger('status')->default(1)->comment('状态');
             $table->timestamps();
         });
     }

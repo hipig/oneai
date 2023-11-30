@@ -45,4 +45,9 @@ class AuthorizationsController extends Controller
         ]);
     }
 
+    public function destroy(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response(null, 204);
+    }
 }

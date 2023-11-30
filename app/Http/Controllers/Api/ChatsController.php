@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ChatResource;
 use App\Models\Chat;
 use App\Models\Message;
+use App\Settings\ChatSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -19,13 +20,13 @@ class ChatsController extends Controller
         return ChatResource::collection($chats);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, ChatSetting $setting)
     {
         $name = Str::substr($request->name, 0, 15) ?? '新的会话';
         $chat = new Chat([
             'name' => $name,
             'config' => [
-                'model' => 'gpt-4',
+                'model' => $setting->model,
                 'temperature' => 0.8,
                 'top_p' => 1,
                 'max_tokens' => 2000,

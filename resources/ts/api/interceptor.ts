@@ -2,6 +2,7 @@ import axios from "axios";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import { toast } from 'vue3-toastify';
 import { useUserStore } from "@/store";
+import { useRouter } from "vue-router";
 
 export interface HttpResponse<T = unknown> {
     status: number;
@@ -36,10 +37,14 @@ axios.interceptors.response.use(
         return response.data;
     },
     async (error) => {
+        const router = useRouter();
         const userStore = useUserStore();
         switch (error.response.status) {
             case 401:
                 await userStore.clearToken();
+                await router.replace({
+                    name: 'chat.new'
+                });
                 break;
             case 403:
                 toast('此操作权限不足 ' + error.response.data?.message);

@@ -6,7 +6,9 @@
                 <div class="w-full max-w-screen-lg mx-auto px-4 lg:px-6">
                     <div class="message-list flex flex-col-reverse py-2 sm:py-6">
                         <MessageItem type="assistant">
-                            <ChatWelcome />
+                            <div class="bg-white py-2 px-4">
+                                <ChatWelcome />
+                            </div>
                         </MessageItem>
                     </div>
                 </div>
@@ -33,16 +35,10 @@ import {nextTick, onMounted, ref} from "vue";
     const scrollRef = ref();
 
     onMounted(async () => {
-        await getRandomPromptList();
-
         await nextTick();
         scrollRef.value.scrollElement.scrollTo({
             top: scrollRef.value.scrollElement.scrollHeight,
             behavior: 'smooth'
         })
     });
-
-    const getRandomPromptList = async () => {
-        promptList.value = await randomPrompts();
-    }
 </script>

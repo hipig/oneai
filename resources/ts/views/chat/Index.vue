@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div v-else class="message-list w-full flex flex-col-reverse py-2 sm:py-6">
-                        <MessageItem v-for="message in messageList" :type="message.type" :content="message.content" :loading="message?.loading" />
+                        <MessageItem v-for="message in messageList" :id="message.id" :type="message.type" :content="message.content" :loading="message?.loading" />
                     </div>
                 </div>
             </simplebar>

@@ -6,8 +6,7 @@
                 <p class="text-sm text-gray-500">模型不同，消耗额度不同</p>
             </div>
             <select v-model="config.model" class="w-full border-gray-200 rounded-xl shadow-sm focus:border-gray-900 focus:ring-gray-900">
-                <option value="gpt-3.5-turbo">GPT3.5-Turbo</option>
-                <option value="gpt-4">GPT4</option>
+                <option v-for="model in modelList" :value="model.name">{{ model.name }}</option>
             </select>
         </div>
         <div class="space-y-2">
@@ -49,11 +48,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
-import { useChatStore } from '@/store';
-import RangeInput from '@/components/form/range/Index.vue';
+import {computed, onMounted, ref, watch} from 'vue';
+    import { useChatStore } from '@/store';
+    import RangeInput from '@/components/form/range/Index.vue';
+    import { models } from '@/api/model';
 
     const chatStore = useChatStore();
+
+    const modelList = ref([]);
 
     const config = ref(Object.assign({
                 model: "gpt-4",
@@ -71,4 +73,12 @@ import RangeInput from '@/components/form/range/Index.vue';
         },
         {deep: true}
     )
+
+    onMounted(async () => {
+        await getModelList();
+    });
+
+    const getModelList = async () => {
+        modelList.value = await models();
+    }
 </script>

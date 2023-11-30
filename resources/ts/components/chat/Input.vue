@@ -34,14 +34,14 @@
 </template>
 
 <script lang="ts" setup>
-    import { onMounted, ref, watch, nextTick, computed } from "vue";
-    import { useRouter } from "vue-router";
-    import { useChatStore, useUserStore } from "@/store";
-    import { storeMessages } from "@/api/chat";
-    import  autosize from "autosize";
-    import { SSE } from "sse.js";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
+import {useRouter} from "vue-router";
+import {useChatStore, useUserStore} from "@/store";
+import {storeMessages} from "@/api/chat";
+import autosize from "autosize";
+import {SSE} from "sse.js";
 
-    const router = useRouter();
+const router = useRouter();
 
     const chatStore = useChatStore();
     const userStore = useUserStore();
@@ -150,9 +150,7 @@
         loading.value = false;
         const chatId = chatStore.current;
         const index = chatStore.messageList.findIndex(item => item.chat_id === chatId);
-        chatStore.messageList[index].list[0].loading = false;
-
-        await storeMessages({
+        chatStore.messageList[index].list[0] = await storeMessages({
             type: 'assistant',
             content: chatStore.messageList[index].list[0].content,
             chat_id: chatId

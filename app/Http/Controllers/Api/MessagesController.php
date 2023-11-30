@@ -36,4 +36,13 @@ class MessagesController extends Controller
 
         return MessageResource::make($message);
     }
+
+    public function destroy(Message $message)
+    {
+        $this->authorize('own', $message->chat);
+
+        $message->delete();
+
+        return response()->noContent();
+    }
 }

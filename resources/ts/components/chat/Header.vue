@@ -17,7 +17,7 @@
                     </button>
 
                     <Menu as="div" class="relative inline-block">
-                        <MenuButton v-if="userInfo" class="w-8 h-8 p-px rounded-full border-2 border-transparent hover:border-gray-100 focus:border-gray-100">
+                        <MenuButton v-if="isLogin" class="w-8 h-8 p-px rounded-full border-2 border-transparent hover:border-gray-100 focus:border-gray-100">
                             <img class="w-full h-full rounded-full" :src="userInfo.avatar" :alt="userInfo.name">
                         </MenuButton>
 
@@ -31,12 +31,12 @@
                             leave-to-class="opacity-0 scale-90"
                         >
                             <MenuItems class="absolute right-0 origin-top-right z-10 mt-2 w-48 shadow-lg rounded-xl focus:outline-none dark:shadow-gray-900">
-                                <div class="bg-white ring-1 ring-gray-200 ring-opacity-25 rounded-xl divide-y divide-gray-50 dark:bg-gray-800 dark:divide-gray-700 dark:ring-gray-700">
-                                    <div class="p-2 space-y-1">
+                                <div class="px-2 py-1 bg-white ring-1 ring-gray-200 ring-opacity-25 rounded-xl divide-y divide-gray-50 dark:bg-gray-800 dark:divide-gray-700 dark:ring-gray-700">
+                                    <div class="py-1 space-y-1">
                                         <MenuItem v-slot="{ active }">
                                             <a
                                                 href="#"
-                                                class="group font-medium flex items-center justify-between space-x-2 px-2.5 py-1.5 rounded-lg border border-transparent"
+                                                class="group font-medium flex items-center justify-between space-x-2 px-2 py-1.5 rounded-lg border border-transparent"
                                                 :class="{
                     'text-gray-800 bg-gray-100': active,
                     'text-gray-800 hover:text-gray-800 hover:bg-gray-100 active:border-gray-50': !active,
@@ -49,7 +49,7 @@
                                         <MenuItem v-slot="{ active }">
                                             <a
                                                 href="#"
-                                                class="group font-medium flex items-center justify-between space-x-2 px-2.5 py-1.5 rounded-lg border border-transparent"
+                                                class="group font-medium flex items-center justify-between space-x-2 px-2 py-1 rounded-lg border border-transparent"
                                                 :class="{
                     'text-gray-800 bg-gray-100': active,
                     'text-gray-800 hover:text-gray-800 hover:bg-gray-100 active:border-gray-50': !active,
@@ -60,11 +60,11 @@
                                             </a>
                                         </MenuItem>
                                     </div>
-                                    <div class="p-2 space-y-1">
+                                    <div class="py-1 space-y-1">
                                         <MenuItem v-slot="{ active }">
-                                            <a
-                                                href="#"
-                                                class="group font-medium flex items-center justify-between space-x-2 px-2.5 py-1.5 rounded-lg border border-transparent"
+                                            <div
+                                                @click="handleLogout"
+                                                class="group font-medium flex items-center space-x-2 px-2 py-1 rounded-lg border border-transparent cursor-pointer"
                                                 :class="{
                     'text-gray-800 bg-gray-100': active,
                     'text-gray-800 hover:text-gray-800 hover:bg-gray-100 active:border-gray-50': !active,
@@ -72,7 +72,7 @@
                                             >
                                                 <svg class="flex-none hi-mini hi-lock-closed inline-block w-5 h-5 opacity-25 group-hover:opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd"/></svg>
                                                 <span class="grow">退出登录</span>
-                                            </a>
+                                            </div>
                                         </MenuItem>
                                     </div>
                                 </div>
@@ -113,6 +113,9 @@
     import { computed } from "vue";
     import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
     import { useAppStore, useUserStore } from "@/store";
+    import { useRouter } from "vue-router";
+
+    const router = useRouter();
 
     const appStore = useAppStore();
     const userStore = useUserStore();
@@ -137,6 +140,10 @@
         }
     })
 
+    const isLogin = computed(() => {
+        return !!userStore.token;
+    })
+
     const userInfo = computed(() => {
         return userStore.userInfo;
     })
@@ -145,4 +152,10 @@
         appStore.togglePrompt(value);
     }
 
+    const handleLogout = async () => {
+        await userStore.logout();
+        await router.replace({
+            name: 'chat.new'
+        });
+    }
 </script>

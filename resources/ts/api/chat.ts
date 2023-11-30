@@ -36,3 +36,7 @@ export function messages(params: any) {
 export function storeMessages(data: any) {
     return axios.post<ChatRecord>('messages', data);
 }
+
+export function destroyMessages(id: number) {
+    return axios.delete<ChatRecord>('messages/' + id);
+}
