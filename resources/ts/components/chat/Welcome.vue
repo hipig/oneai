@@ -1,5 +1,6 @@
 <template>
-    <div class="py-2 space-y-6">
+    <div class="rounded-xl bg-white py-2 px-4">
+        <div class="py-2 space-y-6">
         <div class="space-y-2">
             <div class="text-2xl font-semibold">你好，我是 ChatGPT</div>
             <p class="text-gray-500">
@@ -55,6 +56,7 @@
             </div>
 
         </div>
+    </div>
     </div>
 </template>
 

@@ -33,7 +33,7 @@
     import {computed, nextTick, onMounted, ref, watch} from 'vue';
     import { useChatStore } from '@/store';
     import ChatHeader from "@/components/chat/Header.vue";
-    import ChatInput from '@/components/chat/Input.vue';
+    import ChatInput from '@/components/chat/input/Index.vue';
     import MessageItem from '@/components/message/Item.vue';
 
     const chatStore = useChatStore();

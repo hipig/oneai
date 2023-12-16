@@ -73,13 +73,13 @@ class ChatsController extends Controller
             $firstMessage = Message::query()->where('chat_id', $chat->id)->latest()->first();
         }
 
-        $messages = Message::query()->where('chat_id', $chat->id)->where('id', '>=', $firstMessage->id)->whereIn('type', [Message::TYPE_USER, Message::TYPE_ASSISTANT])->oldest()->get();
+        $messages = Message::query()->where('chat_id', $chat->id)->where('id', '>=', $firstMessage->id)->whereIn('type', [Message::TYPE_USER, Message::TYPE_ASSISTANT])->latest()->limit(10)->get();
         $messages = $messages->map(function ($message) {
             return [
                 'role' => $message->type,
                 'content' => $message->content
             ];
-        });
+        })->reverse();
 
         $config = $chat->config;
         $config['messages'] = $messages;
