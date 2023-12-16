@@ -98,4 +98,11 @@ class ChatsController extends Controller
             'X-Accel-Buffering' => 'no'
         ]);
     }
+
+    public function clear(Chat $chat)
+    {
+        $chat->messages()->delete();
+
+        return ChatResource::make($chat);
+    }
 }

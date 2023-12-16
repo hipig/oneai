@@ -29,6 +29,10 @@ export function destroyChats(id: number) {
     return axios.delete('chats/' + id);
 }
 
+export function clearChats(id: number) {
+    return axios.post('chats/' + id + '/clear');
+}
+
 export function messages(params: any) {
     return axios.get<MessageRecord[]>('messages', {params});
 }

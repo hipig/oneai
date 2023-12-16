@@ -12,7 +12,7 @@
             <slot>
                 <div class="group space-y-1.5">
                     <div class="flex">
-                        <div class="rounded-xl" :class="[type === 'assistant' ? 'bg-white py-2 px-4' : 'bg-gray-100 sm:px-4']">
+                        <div class="rounded-xl" :class="[type === 'assistant' ? 'min-w-[1rem] bg-white py-2 px-4' : 'bg-gray-100 sm:px-4']">
                             <div ref="textRef" class="prose max-w-none" :class="{'content-loading':  type === 'assistant' && loading, 'whitespace-pre-wrap': type === 'user'}" v-html="content"></div>
                         </div>
                     </div>

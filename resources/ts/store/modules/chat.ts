@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { chats, messages, storeChats, updateChats, destroyChats, storeMessages, destroyMessages } from '@/api/chat';
+import { chats, messages, storeChats, updateChats, destroyChats, clearChats, storeMessages, destroyMessages } from '@/api/chat';
 import {createApp} from "vue";
 
 export interface ChatState {
@@ -116,6 +116,14 @@ const useChatStore = defineStore('chat', {
                 const itemIndex = this.messageList[index].list.findIndex(item => item.id === messageId);
                 this.messageList[index].list.splice(itemIndex, 1);
                 await destroyMessages(messageId);
+            }
+        },
+        async clear() {
+            const index = this.messageList.findIndex(item => item.chat_id === this.current);
+
+            if (index > -1) {
+                this.messageList[index].list = [];
+                await clearChats(this.current);
             }
         }
     },

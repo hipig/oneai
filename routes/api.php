@@ -24,6 +24,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('models', [Api\ModelsController::class, 'index'])->name('models.index');
 
     Route::post('chats/{chat}/stream', [Api\ChatsController::class, 'stream'])->name('chats.stream');
+    Route::post('chats/{chat}/clear', [Api\ChatsController::class, 'clear'])->name('chats.clear');
     Route::apiResource('chats', Api\ChatsController::class)->names('chats')->except('show');
     Route::apiResource('messages', Api\MessagesController::class)->names('messages')->only('index', 'store', 'destroy');
 

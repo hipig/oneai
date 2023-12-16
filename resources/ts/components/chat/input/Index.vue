@@ -62,7 +62,16 @@ const content = computed({
     }
 });
 
-const loading = ref(false);
+const loading = computed(() => {
+    const chatId = chatStore.current;
+    const index = chatStore.messageList.findIndex(item => item.chat_id === chatId);
+
+    if (index > -1) {
+        return chatStore.messageList[index].list[0]?.loading;
+    }
+
+    return false;
+});
 
 const eventSource = ref();
 
@@ -95,7 +104,6 @@ const handleSubmit = async () => {
         return false;
     }
     textInput.value.blur();
-    loading.value = true;
 
     let chatId = chatStore.current;
     if (!chatId) {
@@ -145,14 +153,12 @@ const handleSubmit = async () => {
     eventSource.value.onerror = function (e) {
         console.log(e);
         eventSource.value.close();
-        loading.value = false;
         chatStore.messageList[index].list[0].loading = false;
     };
 }
 
 const stopResponse = async () => {
     eventSource.value.close();
-    loading.value = false;
     const chatId = chatStore.current;
     const index = chatStore.messageList.findIndex(item => item.chat_id === chatId);
     chatStore.messageList[index].list[0] = await storeMessages({
